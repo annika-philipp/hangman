@@ -23,13 +23,13 @@ class HangmanGame
     puts "Gimme a letter"
     puts "You've already guessed these letters #@wrong_letters_guessed"
 
-    answer = gets.chomp.downcase
+    answer = gets.chomp.downcase[0,1]
     letter_in_answer(answer)
   end
 
   def letter_in_answer(answer)
     # refactor this later
-    if answer.match(/[a-zA-Z]/)
+    if answer.match(/\p{L}\p{M}*+/)
       if @wrong_letters_guessed.include? answer
         puts "You've already guessed this letter, try again"
       elsif @correct_letters_guessed.include? answer
