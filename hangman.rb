@@ -9,21 +9,22 @@ class HangmanGame
   def play_game
     @correct_letters_guessed = []
     @wrong_letters_guessed = []
+    @lives = 8
 
     loop do
       mask_letters
       user_input
+      check_game_over
     end
   end
 
   def user_input
-    puts "gimme a letter"
+    puts "\nYou have #@lives lives left"
+    puts "Gimme a letter"
     puts "You've already guessed these letters #@wrong_letters_guessed"
 
     answer = gets.chomp.downcase
     letter_in_answer(answer)
-    
-
   end
 
   def letter_in_answer(answer)
@@ -39,21 +40,45 @@ class HangmanGame
       else
         puts "This letter is not in the word"
         @wrong_letters_guessed.push(answer)
+        reduce_life
       end
     else
       puts "Please enter a valid letter"
     end
   end
 
+  def reduce_life
+    @lives -= 1
+  end
+
   def mask_letters
-    hidden_word = word_to_display.map do |letter|
+    @hidden_word = word_to_display.map do |letter|
       if @correct_letters_guessed.include? letter
         letter
       else
         "_"
       end 
     end
-    puts hidden_word.join(" ")
+    puts @hidden_word.join(" ")
+  end
+
+  def check_game_over
+    check_win || check_loss
+    # check_loss
+  end
+
+  def check_loss
+    if @lives == 0
+      puts "You lost, the word was: #{word_to_guess}."
+      exit
+    end
+  end
+
+  def check_win
+    if word_to_display - @correct_letters_guessed == []
+      puts "Look at you, what a winner, you guessed the right word: #{word_to_guess}!"
+      exit 
+    end
   end
 
   puts "Hello, time to play hangman"
