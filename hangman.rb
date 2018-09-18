@@ -11,14 +11,13 @@ class HangmanGame
     @correct_letters_guessed = []
     @wrong_letters_guessed = []
     @lives = 8
-    @game_over = false
 
-    loop do
+    while !game_over? do
       mask_letters
-      user_input
-      check_game_over
-      play_again
+      letter_in_answer(user_input)
     end
+
+    # play_again
   end
 
   def user_input
@@ -26,16 +25,13 @@ class HangmanGame
     puts "Gimme a letter"
     puts "You've already guessed these letters #@wrong_letters_guessed"
 
-    answer = gets.chomp.downcase[0,1]
-    letter_in_answer(answer)
+    gets.chomp.downcase[0,1]
   end
 
   def letter_in_answer(answer)
-    # refactor this later
+    # break into two methods
     if answer.match(/\p{L}\p{M}*+/)
-      if @wrong_letters_guessed.include? answer
-        puts "You've already guessed this letter, try again"
-      elsif @correct_letters_guessed.include? answer
+      if @wrong_letters_guessed.include?(answer) || @correct_letters_guessed.include?(answer)
         puts "You've already guessed this letter, try again"
       elsif word_to_guess.include? answer
         puts "This letter is in the word"
@@ -56,50 +52,37 @@ class HangmanGame
   end
 
   def mask_letters
-    @hidden_word = word_to_display.map do |letter|
-      if @correct_letters_guessed.include? letter
-        letter
-      else
-        "_"
+    # use filter or reduce instead
+    puts "WTD: #@word_to_display"
+    @hidden_word = word_to_display.filter do |letter|
+      letter.include? answer || "_"
       end 
-    end
     puts @hidden_word.join(" ")
+    # @hidden_word = word_to_display.map do |letter|
+    #   if @correct_letters_guessed.include? letter
+    #     letter
+    #   else
+    #     "_"
+    #   end 
+    # end
+    # puts @hidden_word.join(" ")
   end
 
-  def check_game_over
-    check_win || check_loss
+  def game_over?
+    check_win? || check_loss?
   end
 
-  def check_loss
+  def check_loss?
     if @lives == 0
       puts "You lost, the word was: #{word}."
-      @game_over = true
-    #   exit
+      true
     end
   end
 
-  def check_win
+  def check_win?
     if word_to_display - @correct_letters_guessed == []
       puts "Look at you, what a winner, you guessed the right word: #{word}!"
-      @game_over = true
-    #   exit 
-    end
-  end
-
-  def play_again
-    if @game_over
-      puts "Play again? Y/N"
-      new_game = gets.chomp.upcase
-      if new_game == "N"
-        puts "Good Bye"
-        exit
-      elsif new_game == "Y"
-        puts "Ummmm tough look you can only play once!"
-      else
-        puts "please enter Y or N"
-        play_again
-      end
-      exit
+      true
     end
   end
 
@@ -107,6 +90,5 @@ class HangmanGame
 
 end
 
-# hardcoding word for now
 h = HangmanGame.new("Pizza")
 h.play_game
