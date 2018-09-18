@@ -28,22 +28,30 @@ class HangmanGame
 
   def letter_in_answer(answer)
     # refactor this later
-    if @wrong_letters_guessed.include? answer
-      puts "You've already guessed this letter, try again"
-    elsif @correct_letters_guessed.include? answer
-      puts "You've already guessed this letter, try again"
-    elsif word_to_guess.include? answer
-      puts "This letter is in the word"
-      @correct_letters_guessed.push(answer)
+    if answer.match(/[a-zA-Z]/)
+      if @wrong_letters_guessed.include? answer
+        puts "You've already guessed this letter, try again"
+      elsif @correct_letters_guessed.include? answer
+        puts "You've already guessed this letter, try again"
+      elsif word_to_guess.include? answer
+        puts "This letter is in the word"
+        @correct_letters_guessed.push(answer)
+      else
+        puts "This letter is not in the word"
+        @wrong_letters_guessed.push(answer)
+      end
     else
-      puts "This letter is not in the word"
-      @wrong_letters_guessed.push(answer)
+      puts "Please enter a valid letter"
     end
   end
 
   def mask_letters
     hidden_word = word_to_display.map do |letter|
-        "_" 
+      if @correct_letters_guessed.include? letter
+        letter
+      else
+        "_"
+      end 
     end
     puts hidden_word.join(" ")
   end
