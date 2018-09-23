@@ -9,6 +9,8 @@ class Controller
     @hangman    = Hangman.new(word: "Pizza", lives: 8)
     # puts @hangman.word
     # puts @hangman.lives
+    # puts @hangman.word_to_guess
+    # puts @hangman.word_to_display
     @user_input = UserInput.new
     @view       = View.new
 
@@ -24,6 +26,10 @@ class Controller
       @view.ask_for_input
       input = @user_input.get_input
       if @hangman.input_valid?(input)
+        @hangman.letter_in_word(input)
+        # # if @hangman.input_duplicate?(input)
+        #   # @view.duplicate_input_message(input)
+        # else
         puts "yuss"
     #     turn_result = @hangman.take_turn(input)
           
