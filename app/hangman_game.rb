@@ -1,10 +1,10 @@
 class Hangman
-  attr_reader :word, :lives, :word_to_guess, :word_to_display
+  attr_reader :word, :word_to_guess, :word_to_display
 
-    #how does this work? is this how you access values from hashes?
   def initialize(hsh = {})
     @word = hsh[:word]
     @lives = hsh[:lives]
+    @view = hsh[:view]
     @word_to_guess = word.downcase
     @word_to_display = word.chars
     @correct_letters_guessed = []
@@ -12,11 +12,9 @@ class Hangman
   end
 
   def running?
+    @view.lives_remaining_message(@lives)
+    @view.incorrect_letters(@wrong_letters_guessed)
     mask_letters
-    #the puts should be handled by @views
-    puts @correct_letters_guessed
-    puts "Wrong letters already guessed: #@wrong_letters_guessed"
-    # check if letter is in word (or do this separately?)
     true
   end
 
@@ -41,7 +39,12 @@ class Hangman
       @correct_letters_guessed.push(answer)
     else
       @wrong_letters_guessed.push(answer)
+      reduce_life
     end
+  end
+
+  def reduce_life
+    @lives -= 1
   end
 
   # implement later

@@ -6,15 +6,11 @@ require_relative 'view'
 class Controller
   def initialize
     # I'm passing a hash to Hangman, right? How does the syntax in the actual class work?
-    @hangman    = Hangman.new(word: "Pizza", lives: 8)
-    # puts @hangman.word
-    # puts @hangman.lives
-    # puts @hangman.word_to_guess
-    # puts @hangman.word_to_display
-    @user_input = UserInput.new
     @view       = View.new
+    @hangman    = Hangman.new(word: "pizza", lives: 8, view: @view)
+    @user_input = UserInput.new
 
-    # # initialize WordToGuess class - but should the others really live here or in WordToGuess?
+    # # initialize WordToGuess class
     # @w = WordToGuess.new("PizZa")
   end
 
@@ -43,5 +39,3 @@ end
 
 c = Controller.new
 c.play
-
-# methods - verbose : what is the result of it
