@@ -34,11 +34,18 @@ class Hangman
     # returns an array, for test to work had to add the if/else statement, or could have rewritten test
   end
 
+  def take_turn(input)
+    letter_in_word(input)
+    # game_over?
+  end
+
   def letter_in_word(answer)
     if word_to_guess.include? answer
       @correct_letters_guessed.push(answer)
+      @view.correct_letter_guessed(answer)
     else
       @wrong_letters_guessed.push(answer)
+      @view.wrong_letter_guessed(answer)
       reduce_life
     end
   end
@@ -52,22 +59,22 @@ class Hangman
   # end
 
 
-  # implement later
-  # def take_turn(input)
-  #   # gets called with valid input
-  #     # check if win
-  #     # check if lost
+  # def game_over?
+  #   check_win? || check_loss?
   # end
 
-  # implement later
-  # def input_duplicate?(input)
+  # def win(word)
+  #   if word_to_display - @correct_letters_guessed == []
+  #     @view.game_won_message(word)
+  #     true
+  #   end
   # end
 
-
-  # def win
-  # end
-
-  # def lost
+  # def lost(word)
+  #   if @lives == 0
+  #     @view.game_lost_message(word)
+  #     true
+  #   end
   # end
 
   # this is just for checking how RSpec works, works when I uncomment initialize
