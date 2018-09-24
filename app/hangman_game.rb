@@ -15,7 +15,6 @@ class Hangman
 
   def running?    
     @view.show_stats(remaining_lives, @wrong_letters_guessed)
-    # !game_lost? || !game_won?
     game_won? || !game_lost?
   end
 
@@ -53,18 +52,14 @@ class Hangman
     end
   end
 
-  def take_turn(input)
-    letter_in_word(input)
-  end
-
-  def letter_in_word(answer)
+  def take_turn(answer)
     if word_to_guess.include?(answer)
       @correct_letters_guessed.push(answer)
       @correct_letters_guessed.push(answer.upcase)
-      @view.correct_letter_guessed(answer)
+      true
     else
       @wrong_letters_guessed.push(answer)
-      @view.wrong_letter_guessed(answer)
+      false
     end
   end
 

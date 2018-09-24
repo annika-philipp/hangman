@@ -18,7 +18,11 @@ class Controller
       @view.ask_for_input
       input = @user_input.get_input
       if @hangman.input_valid?(input)
-        @hangman.take_turn(input)
+        if @hangman.take_turn(input) == true
+          @view.correct_letter_guessed(input)
+        else 
+          @view.wrong_letter_guessed(input)
+        end
       else 
         @view.invalid_input_message(input)
       end 
@@ -29,11 +33,3 @@ end
 
 c = Controller.new
 c.play
-
-
-
-        # below is Jah's input - figure this out!
-        # @view.print_turn_result(@hangman)
-
-    #     turn_result = @hangman.take_turn(input)
-    #     @view.print_turn_result(turn_result)
