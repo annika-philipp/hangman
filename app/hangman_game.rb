@@ -15,13 +15,15 @@ class Hangman
 
   def running?    
     @view.show_stats(remaining_lives, @wrong_letters_guessed)
-    !game_lost? || !game_won?
+    # !game_lost? || !game_won?
+    game_won? || !game_lost?
   end
 
   def game_won?
     if word_to_display - @correct_letters_guessed == []
       @view.game_won_message(word)
-      true
+      false
+      exit
     end
   end
 
@@ -29,6 +31,7 @@ class Hangman
     if remaining_lives == 0
       @view.game_lost_message(word)
       true
+      exit
     end
   end
 
