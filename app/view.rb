@@ -4,6 +4,13 @@ class View
     puts "Let's play hangman"
   end
 
+  def mask_letters(word_to_display, correct_letters_guessed)
+    @hidden_word = word_to_display.map do |letter|
+      correct_letters_guessed.include?(letter) ? letter : "_"
+    end
+    puts @hidden_word.join(" ")
+  end
+
   def ask_for_input
     puts "Give me a letter"
   end

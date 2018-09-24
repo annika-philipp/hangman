@@ -9,19 +9,20 @@ class Controller
     @view       = View.new
     @hangman    = Hangman.new(word: "PizZa", lives: 8, view: @view)
     @user_input = UserInput.new
-
-    # # initialize WordToGuess class
-    # @w = WordToGuess.new("PizZa")
   end
 
   def play
     @view.welcome
-    # loop until hangman.running? evaluates to false. Not actually doing this, just exiting when game_over is true
     while @hangman.running?
+      @hangman.hide_word
       @view.ask_for_input
       input = @user_input.get_input
       if @hangman.input_valid?(input)
         @hangman.take_turn(input)
+
+        # below if Jah's input - figure this out!
+        # @view.print_turn_result(@hangman)
+
     #     turn_result = @hangman.take_turn(input)
     #     @view.print_turn_result(turn_result)
       else 
