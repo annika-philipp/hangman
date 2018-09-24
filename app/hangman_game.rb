@@ -5,7 +5,7 @@ class Hangman
 
   def initialize(hsh = {})
     @word = hsh[:word]
-    @lives = hsh[:lives]
+    @initial_lives = hsh[:lives]
     @view = hsh[:view]
     @word_to_guess = word.downcase
     @word_to_display = word.chars
@@ -14,9 +14,8 @@ class Hangman
   end
 
   def running?    
-    # @view.lives_remaining_message(@lives)
-    # @view.incorrect_letters(@wrong_letters_guessed)
-    !game_won? || !game_lost?
+    @view.show_stats(remaining_lives, @wrong_letters_guessed)
+    !game_lost? || !game_won?
   end
 
   def game_won?
@@ -27,14 +26,18 @@ class Hangman
   end
 
   def game_lost?
-    if @lives == 0
+    if remaining_lives == 0
       @view.game_lost_message(word)
       true
     end
   end
 
+  def remaining_lives
+    @initial_lives - @wrong_letters_guessed.size
+  end
+
   def hide_word
-    @view.mask_letters(word_to_display, @correct_letters_guessed)
+    @view.mask_letters(word_to_display, @correct_letters_guessed, @wrong_letters_guessed)
   end
 
   def input_valid?(input)
@@ -51,25 +54,15 @@ class Hangman
     letter_in_word(input)
   end
 
-  # Annika think about this!
-  # def lives
-  #   initial_lives - incorrect_letters.size
-  # end
-
   def letter_in_word(answer)
     if word_to_guess.include?(answer)
       @correct_letters_guessed.push(answer)
       @correct_letters_guessed.push(answer.upcase)
       @view.correct_letter_guessed(answer)
     else
-      reduce_life
       @wrong_letters_guessed.push(answer)
       @view.wrong_letter_guessed(answer)
     end
-  end
-
-  def reduce_life
-    @lives -= 1
   end
 
 end

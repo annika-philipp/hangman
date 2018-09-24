@@ -19,12 +19,6 @@ class Controller
       input = @user_input.get_input
       if @hangman.input_valid?(input)
         @hangman.take_turn(input)
-
-        # below if Jah's input - figure this out!
-        # @view.print_turn_result(@hangman)
-
-    #     turn_result = @hangman.take_turn(input)
-    #     @view.print_turn_result(turn_result)
       else 
         @view.invalid_input_message(input)
       end 
@@ -35,3 +29,11 @@ end
 
 c = Controller.new
 c.play
+
+
+
+        # below is Jah's input - figure this out!
+        # @view.print_turn_result(@hangman)
+
+    #     turn_result = @hangman.take_turn(input)
+    #     @view.print_turn_result(turn_result)
