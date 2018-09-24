@@ -23,9 +23,6 @@ class Controller
       input = @user_input.get_input
       if @hangman.input_valid?(input)
         @hangman.take_turn(input)
-        # this will be part of turn_result
-        # if @hangman.input_duplicate?(input)
-        #   # @view.duplicate_input_message(input)
     #     turn_result = @hangman.take_turn(input)
           
     #     @view.print_turn_result(turn_result)

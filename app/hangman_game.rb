@@ -35,8 +35,15 @@ class Hangman
   end
 
   def take_turn(input)
-    letter_in_word(input)
-    # game_over?
+    letter_in_word(input) unless duplicate_letter(input)
+    game_over
+  end
+
+  def duplicate_letter(answer)
+    if @wrong_letters_guessed.include?(answer) || @correct_letters_guessed.include?(answer)
+      @view.duplicate_letter_message
+      true
+    end
   end
 
   def letter_in_word(answer)
@@ -54,28 +61,24 @@ class Hangman
     @lives -= 1
   end
 
-  # implement later
-  # def input_duplicate?(input)
-  # end
 
+  def game_over
+    win || loss
+  end
 
-  # def game_over?
-  #   check_win? || check_loss?
-  # end
+  def win
+    if word_to_display - @correct_letters_guessed == []
+      @view.game_won_message(word)
+      true
+    end
+  end
 
-  # def win(word)
-  #   if word_to_display - @correct_letters_guessed == []
-  #     @view.game_won_message(word)
-  #     true
-  #   end
-  # end
-
-  # def lost(word)
-  #   if @lives == 0
-  #     @view.game_lost_message(word)
-  #     true
-  #   end
-  # end
+  def loss
+    if @lives == 0
+      @view.game_lost_message(word)
+      true
+    end
+  end
 
   # this is just for checking how RSpec works, works when I uncomment initialize
   # def has_vowels?(str)

@@ -24,6 +24,10 @@ class View
     puts "Nope, #{answer} is not in the word."
   end
 
+  def duplicate_letter_message
+    puts "You've already guessed this letter, try again"
+  end
+
   def incorrect_letters(wrong_letters_guessed)
     puts "Wrong letters already guessed: #{wrong_letters_guessed}"
   end
