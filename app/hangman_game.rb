@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Hangman
   attr_reader :word, :word_to_guess, :word_to_display
 
@@ -11,7 +13,7 @@ class Hangman
     @wrong_letters_guessed = []
   end
 
-  def running?
+  def running?    
     @view.lives_remaining_message(@lives)
     @view.incorrect_letters(@wrong_letters_guessed)
     mask_letters
@@ -26,29 +28,26 @@ class Hangman
   end
 
   def input_valid?(input)
-    if input.match(/[a-zA-Z]/).nil? 
-      return false
-    else
-      return true
-    end
-    # returns an array, for test to work had to add the if/else statement, or could have rewritten test
+    input.match(/[a-zA-Z]/)
   end
 
   def take_turn(input)
     letter_in_word(input) unless duplicate_letter(input)
-    game_over
+    if game_over 
+      exit
+    end
   end
 
   def duplicate_letter(answer)
     if @wrong_letters_guessed.include?(answer) || @correct_letters_guessed.include?(answer)
       @view.duplicate_letter_message
-      true
     end
   end
 
   def letter_in_word(answer)
-    if word_to_guess.include? answer
+    if word_to_guess.include?(answer)
       @correct_letters_guessed.push(answer)
+      @correct_letters_guessed.push(answer.upcase)
       @view.correct_letter_guessed(answer)
     else
       @wrong_letters_guessed.push(answer)
@@ -60,7 +59,6 @@ class Hangman
   def reduce_life
     @lives -= 1
   end
-
 
   def game_over
     win || loss
@@ -79,12 +77,6 @@ class Hangman
       true
     end
   end
-
-  # this is just for checking how RSpec works, works when I uncomment initialize
-  # def has_vowels?(str)
-  #   !!(str =~ /[aeiou]+/i)
-  # end
-
 
 end
 
