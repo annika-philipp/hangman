@@ -38,7 +38,6 @@ class Hangman
     @initial_lives - wrong_letters_guessed.size
   end
 
-
   # word
   def input_valid?(input)
     input_valid_letter?(input) && !duplicate?(input)

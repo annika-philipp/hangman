@@ -5,6 +5,7 @@ class View
   end
 
   def show_stats(remaining_lives, wrong_letters_guessed)
+    puts "\n"
     lives_remaining_message(remaining_lives)
     incorrect_letters_message(wrong_letters_guessed)
   end
@@ -22,7 +23,7 @@ class View
       correct_letters_guessed.include?(letter) ? letter : "_"
     end
     puts @hidden_word.join(" ")
-    puts @wrong_letters_guessed
+    puts "\n"
   end
 
   def ask_for_input
