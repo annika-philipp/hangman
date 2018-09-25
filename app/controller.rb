@@ -14,7 +14,8 @@ class Controller
   def play
     @view.welcome
     while @hangman.running?
-      @hangman.hide_word
+      @view.show_stats(@hangman.remaining_lives, @hangman.wrong_letters_guessed)
+      @view.display_hidden_word(@hangman.word_to_display, @hangman.correct_letters_guessed, @hangman.wrong_letters_guessed)
       @view.ask_for_input
       input = @user_input.get_input
       if @hangman.input_valid?(input)

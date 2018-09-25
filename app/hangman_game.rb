@@ -1,7 +1,7 @@
 # require 'byebug'
 
 class Hangman
-  attr_reader :word, :word_to_guess, :word_to_display
+  attr_reader :word, :word_to_guess, :word_to_display, :wrong_letters_guessed, :correct_letters_guessed
 
   def initialize(hsh = {})
     @word = hsh[:word]
@@ -13,46 +13,59 @@ class Hangman
     @wrong_letters_guessed = []
   end
 
+  # hangman
   def running?    
-    @view.show_stats(remaining_lives, @wrong_letters_guessed)
-    game_won? || !game_lost?
+    !game_over?
   end
 
+  def game_over?
+    game_won? || game_lost?
+  end
+
+  # hangman
   def game_won?
     if word_to_display - @correct_letters_guessed == []
+      # move view to controller
       @view.game_won_message(word)
-      false
-      exit
+      true 
     end
   end
 
+  # hangman
   def game_lost?
     if remaining_lives == 0
+      # move view to controller
       @view.game_lost_message(word)
       true
-      exit
     end
   end
 
+  # hangman
   def remaining_lives
-    @initial_lives - @wrong_letters_guessed.size
+    @initial_lives - wrong_letters_guessed.size
   end
 
-  def hide_word
-    @view.mask_letters(word_to_display, @correct_letters_guessed, @wrong_letters_guessed)
-  end
 
+  # word
   def input_valid?(input)
     input.match(/[a-zA-Z]/) && !duplicate?(input)
   end
 
+  # word
   def duplicate?(letter)
-    if @wrong_letters_guessed.include?(letter) || @correct_letters_guessed.include?(letter)
+    if wrong_letters_guessed.include?(letter) || @correct_letters_guessed.include?(letter)
+      # move view to controller
       @view.duplicate_letter_message
     end
   end
 
+  # hangman
   def take_turn(answer)
+    letter_in_word(answer)
+  end
+
+  # word
+  def letter_in_word(answer)
     if word_to_guess.include?(answer)
       @correct_letters_guessed.push(answer)
       @correct_letters_guessed.push(answer.upcase)
@@ -62,6 +75,8 @@ class Hangman
       false
     end
   end
+
+  private
 
 end
 
