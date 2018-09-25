@@ -25,7 +25,6 @@ class Word
   def letter_in_word(answer)
     if secret_word_to_guess.include?(answer)
       correct_letters_guessed.push(answer)
-      correct_letters_guessed.push(answer.upcase)
       true
     else
       wrong_letters_guessed.push(answer)

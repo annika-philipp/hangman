@@ -11,6 +11,10 @@ class Hangman
     !game_over?
   end
 
+  def game_won?
+    @word.secret_word_to_display - @word.correct_letters_guessed == []
+  end
+
   def remaining_lives
     @initial_lives - @word.wrong_letters_guessed.size
   end
@@ -25,16 +29,10 @@ class Hangman
     game_won? || game_lost?
   end
 
-  def game_won?
-    @word.secret_word_to_display - @word.correct_letters_guessed == []
-  end
-
   def game_lost?
     remaining_lives == 0
   end
 
 end
 
-# allows for all kindsa unicode, å, ß, ø etc.
-# if input.match(/\p{L}\p{M}*+/).nil? 
 
