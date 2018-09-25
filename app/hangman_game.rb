@@ -18,6 +18,7 @@ class Hangman
     !game_over?
   end
 
+  # hangman
   def game_over?
     game_won? || game_lost?
   end
@@ -25,8 +26,6 @@ class Hangman
   # hangman
   def game_won?
     if word_to_display - @correct_letters_guessed == []
-      # move view to controller
-      @view.game_won_message(word)
       true 
     end
   end
@@ -34,8 +33,6 @@ class Hangman
   # hangman
   def game_lost?
     if remaining_lives == 0
-      # move view to controller
-      @view.game_lost_message(word)
       true
     end
   end

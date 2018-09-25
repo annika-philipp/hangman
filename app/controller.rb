@@ -28,7 +28,11 @@ class Controller
         @view.invalid_input_message(input)
       end 
     end
-    puts "great game"
+    if @hangman.game_won?
+      @view.game_won_message(@hangman.word)
+    else
+      @view.game_lost_message(@hangman.word)
+    end
   end
 end
 
