@@ -23,17 +23,21 @@ class Controller
       input = @user_input.get_input
 
       if @word.input_valid?(input)
+
         if @hangman.take_turn(input) == true
           @view.correct_letter_guessed(input)
         else 
           @view.wrong_letter_guessed(input)
         end
+
       else 
+
         if @word.duplicate_letter?(input)
           @view.duplicate_letter_message
         else
           @view.invalid_input_message(input)
         end
+        
       end 
 
     end

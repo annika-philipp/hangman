@@ -11,6 +11,16 @@ class Hangman
     !game_over?
   end
 
+  def remaining_lives
+    @initial_lives - @word.wrong_letters_guessed.size
+  end
+
+  def take_turn(answer)
+    @word.letter_in_word(answer)
+  end
+
+  private
+
   def game_over?
     game_won? || game_lost?
   end
@@ -22,16 +32,6 @@ class Hangman
   def game_lost?
     remaining_lives == 0
   end
-
-  def remaining_lives
-    @initial_lives - @word.wrong_letters_guessed.size
-  end
-
-  def take_turn(answer)
-    @word.letter_in_word(answer)
-  end
-
-  # private
 
 end
 
