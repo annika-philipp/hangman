@@ -25,16 +25,12 @@ class Hangman
 
   # hangman
   def game_won?
-    if word_to_display - @correct_letters_guessed == []
-      true 
-    end
+    word_to_display - @correct_letters_guessed == []
   end
 
   # hangman
   def game_lost?
-    if remaining_lives == 0
-      true
-    end
+    remaining_lives == 0
   end
 
   # hangman
@@ -45,15 +41,16 @@ class Hangman
 
   # word
   def input_valid?(input)
-    input.match(/[a-zA-Z]/) && !duplicate?(input)
+    input_valid_letter?(input) && !duplicate?(input)
+  end
+
+  def input_valid_letter?(input)
+    input.match(/[a-zA-Z]/)
   end
 
   # word
   def duplicate?(letter)
-    if wrong_letters_guessed.include?(letter) || @correct_letters_guessed.include?(letter)
-      # move view to controller
-      @view.duplicate_letter_message
-    end
+    wrong_letters_guessed.include?(letter) || @correct_letters_guessed.include?(letter)
   end
 
   # hangman
@@ -73,7 +70,7 @@ class Hangman
     end
   end
 
-  private
+  # private
 
 end
 

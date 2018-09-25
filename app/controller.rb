@@ -18,6 +18,7 @@ class Controller
       @view.display_hidden_word(@hangman.word_to_display, @hangman.correct_letters_guessed, @hangman.wrong_letters_guessed)
       @view.ask_for_input
       input = @user_input.get_input
+
       if @hangman.input_valid?(input)
         if @hangman.take_turn(input) == true
           @view.correct_letter_guessed(input)
@@ -25,15 +26,23 @@ class Controller
           @view.wrong_letter_guessed(input)
         end
       else 
-        @view.invalid_input_message(input)
+        if @hangman.duplicate?(input)
+          @view.duplicate_letter_message
+        else
+          @view.invalid_input_message(input)
+        end
       end 
+
     end
+
     if @hangman.game_won?
       @view.game_won_message(@hangman.word)
     else
       @view.game_lost_message(@hangman.word)
     end
+
   end
+
 end
 
 c = Controller.new
