@@ -1,5 +1,6 @@
 class Word
 
+  # reader means value of variable can be set from within class, but only read from outside
   attr_reader :secret_word, :secret_word_to_guess, :secret_word_to_display, :wrong_letters_guessed, :correct_letters_guessed
 
   def initialize(hsh = {})
@@ -15,7 +16,11 @@ class Word
   end
 
   def input_valid_letter?(input)
-    input.match(/[a-zA-Z]/)
+    if input.match(/[a-zA-Z]/)
+      true
+    else
+      false
+    end
   end
 
   def duplicate_letter?(letter)

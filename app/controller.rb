@@ -3,11 +3,10 @@ require_relative 'word'
 require_relative 'user_input'
 require_relative 'view'
 
-
 class Controller
   def initialize
     @view       = View.new
-    @word       = Word.new(secret_word: "pizza")
+    @word       = Word.new(:secret_word => "pizza")
     @hangman    = Hangman.new(lives: 8, word: @word)
     @user_input = UserInput.new
   end
@@ -22,7 +21,7 @@ class Controller
   end
 
   private
-  
+
   def welcome
     @view.welcome
   end
