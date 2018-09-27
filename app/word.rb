@@ -1,3 +1,5 @@
+require 'byebug'
+
 class Word
 
   # reader means value of variable can be set from within class, but only read from outside
